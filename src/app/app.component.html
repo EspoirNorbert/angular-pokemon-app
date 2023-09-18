@@ -1,4 +1,5 @@
 <h1 class="center">Liste des Pokémons</h1>
+<router-outlet></router-outlet>
 
 <div class="container">
   <div class="row">
@@ -11,8 +12,14 @@
           <div class="card-content">
             <p>{{ pokemon.name }}</p>
             <p>
-              <small> {{ pokemon.created }} </small>
-            </p>
+                <small> {{ pokemon.created | date: 'dd/MM/yy' }} </small>
+              </p>
+              <span
+                *ngFor="let type of pokemon.types"
+                class=" {{ type | pokemonTypeColor }} "
+              >
+                {{ type }}
+              </span>
           </div>
         </div>
       </div>
