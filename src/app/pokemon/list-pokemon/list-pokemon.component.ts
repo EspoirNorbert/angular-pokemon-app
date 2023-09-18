@@ -1,4 +1,4 @@
-import { Pokemon } from './../pokemon';
+import { Pokemon } from '../pokemon';
 import { Component } from '@angular/core';
 import { POKEMONS } from '../mock-pockemon';
 import { Router } from '@angular/router';
