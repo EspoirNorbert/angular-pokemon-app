@@ -1,7 +1,9 @@
+import { OnInit } from '@angular/core';
 import { Pokemon } from '../pokemon';
 import { Component } from '@angular/core';
 import { POKEMONS } from '../mock-pockemon';
 import { Router } from '@angular/router';
+import { PokemonService } from '../pokemon.service';
 
 @Component({
   selector: 'app-list-pokemon',
@@ -9,29 +11,17 @@ import { Router } from '@angular/router';
   styles: [
   ]
 })
-export class ListPokemonComponent {
+export class ListPokemonComponent implements OnInit {
 
-  pokemonList: Pokemon[] = POKEMONS;
-  pokemonSelected: Pokemon | undefined;
+  pokemonList: Pokemon[];
 
-  constructor(private router : Router) {}
+  constructor(
+    private router : Router,
+    private pokemonService: PokemonService
+    ) {}
 
   ngOnInit() {
-    console.table(this.pokemonList);
-  }
-
-  selectPokemon(pokemonId: string) {
-    const pokemon: Pokemon | undefined = this.pokemonList.find(
-      (pokemon) => pokemon.id == +pokemonId
-    );
-
-    if (pokemon) {
-      console.log(`Vous avez demandé sur le pokémon ${pokemon.name}`);
-      this.pokemonSelected = pokemon;
-    } else {
-      console.log(`Vous avez demandé un pokémon qui n'existe pas.`);
-      this.pokemonSelected = pokemon;
-    }
+    this.pokemonList = this.pokemonService.getPokemonList()
   }
 
   goToPokemon(pokemon: Pokemon){
