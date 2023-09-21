@@ -1,7 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
-import { POKEMONS } from './mock-pockemon';
-import { HttpClient } from '@angular/common/http';
 import { tap,Observable, catchError,of } from 'rxjs';
 
 @Injectable()
@@ -11,22 +10,24 @@ export class PokemonService {
 
   getPokemonList(): Observable<Pokemon[]>  {
     return this.http.get<Pokemon[]>('api/pokemons').pipe(
-      tap ((pokemonList) => console.table(pokemonList)),
-      catchError((error)=> {
-        console.log(error);
-        return of([])
-      })
+      tap ((pokemonList) => this.log(pokemonList)),
+      catchError((error => this.handleError(error, []) ))
     )
+  }
+
+  private log(response : Pokemon[]|Pokemon|undefined) {
+    console.table(response)    
+  }
+
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue);
   }
 
   getPokemonById(pokemonId: number): Observable<Pokemon|undefined> {
     return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
       tap ((pokemonList) => console.table(pokemonList)),
-      catchError((error)=> {
-        console.log(error);
-        return of(undefined)
-      })
-    )
+      catchError(error => this.handleError(error, undefined)))
   }
 
   getPokemonTypeList(): string[] {
