@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
 import { POKEMONS } from './mock-pockemon';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PokemonService {
+  
+  constructor(private http: HttpClient) {}
 
   getPokemonList(): Pokemon[] {
     return POKEMONS;
