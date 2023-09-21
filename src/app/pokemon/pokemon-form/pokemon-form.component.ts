@@ -2,6 +2,7 @@ import { PokemonService } from './../pokemon.service';
 import { OnInit, Input } from '@angular/core';
 import { Component } from '@angular/core';
 import { Pokemon } from '../pokemon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-form',
@@ -15,7 +16,8 @@ export class PokemonFormComponent implements OnInit {
 
   types: string[];
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService,
+    private router: Router) {}
 
   ngOnInit(): void {
       this.types = this.pokemonService.getPokemonTypeList();
@@ -25,12 +27,13 @@ export class PokemonFormComponent implements OnInit {
       return this.pokemon.types.includes(type);
   }
 
-  selectType() {
-
-  }
+  selectType() {}
 
   onSubmit() {
-
+    this.pokemonService.updatePokemon(this.pokemon)
+    .subscribe((pokemon) => {this.router.navigate(['/pokemon',this.pokemon.id])
+  });
+    
   }
 
 }
