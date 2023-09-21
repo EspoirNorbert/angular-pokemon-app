@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
 import { tap,Observable, catchError,of } from 'rxjs';
@@ -15,19 +15,20 @@ export class PokemonService {
     )
   }
 
-  private log(response : Pokemon[]|Pokemon|undefined) {
-    console.table(response)    
-  }
-
-  private handleError(error: Error, errorValue: any) {
-    console.error(error);
-    return of(errorValue);
-  }
-
   getPokemonById(pokemonId: number): Observable<Pokemon|undefined> {
     return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
       tap ((pokemonList) => console.table(pokemonList)),
       catchError(error => this.handleError(error, undefined)))
+  }
+
+  updatePokemon(pokemon: Pokemon) : Observable<Pokemon>{
+    const httpOptions = {
+      headers : new HttpHeaders({'content-type': 'application/json'})
+    };
+    return this.http.put<Pokemon>('api/pokemons', pokemon, httpOptions).pipe(
+      tap(response => this.log(response)),
+      catchError((error) => this.handleError(error,undefined))
+    )
   }
 
   getPokemonTypeList(): string[] {
@@ -44,5 +45,14 @@ export class PokemonService {
       'Combat',
       'Psy'
     ];
+  }
+
+  private log(response : Pokemon[]|Pokemon|undefined) {
+    console.table(response)    
+  }
+
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue);
   }
 }
