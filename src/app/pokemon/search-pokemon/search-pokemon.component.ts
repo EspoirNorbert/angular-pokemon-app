@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../pokemon';
 import { Route, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, debounceTime, delay, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { PokemonService } from '../pokemon.service';
 
 @Component({
   selector: 'app-search-pokemon',
@@ -21,9 +22,22 @@ export class SearchPokemonComponent implements OnInit {
    * Construire un flux de données.
    */
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private pokemonService:
+    PokemonService){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pokemons$ = this.searchTerms.pipe(
+      // {..."a"...."ab"...."abz"."ab"...."abc"....}
+      debounceTime(300), // trop success supprimé
+      // {..."ab"..."ab"...."abc"....}
+      // atteindre qu'il est de changment dans la requette
+      distinctUntilChanged(), // supprimer les repetitons
+      // {..."ab"..."ab"...."abc"....}
+      switchMap((term) => this.pokemonService.searchPokemonList(term))
+      // {...pokemonList(ab).......pokemonList(abc)....}
+      // concatMap / mergeMap / SwitchMap (Effectuer la requette recent)
+    );
+  }
 
   search (term: string){
     // pousser le terme de recherche 
@@ -32,7 +46,7 @@ export class SearchPokemonComponent implements OnInit {
   }
 
   goToDetail(pokemon: Pokemon){
-    const link = ['/pokemon' , pokemon.id]
+    const link = ['/pokemons' , pokemon.id]
     this.router.navigate(link);
   }
 }
