@@ -9,10 +9,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { PokemonService } from './pokemon.service';
 import { PokemonFormComponent } from './pokemon-form/pokemon-form.component';
 import { AddPokemonComponent } from './add-pokemon/add-pokemon.component';
+import { EditPokemonComponent } from './edit-pokemon/edit-pokemon.component';
 
 const pokemonRoutes: Routes = [
   {path: 'pokemons' , component: ListPokemonComponent},
+  {path: 'pokemons/add' , component: AddPokemonComponent},
   {path: 'pokemons/:id' , component: DetailPokemonComponent},
+  {path: 'pokemons/edit/:id' , component: EditPokemonComponent},
 ];
 
 @NgModule({
@@ -22,7 +25,8 @@ const pokemonRoutes: Routes = [
     BorderCardDirective,
     PokemonTypeColorPipe,
     PokemonFormComponent,
-    AddPokemonComponent
+    AddPokemonComponent,
+    EditPokemonComponent
   ],
   imports: [
     CommonModule,

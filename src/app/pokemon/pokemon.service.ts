@@ -17,7 +17,7 @@ export class PokemonService {
 
   getPokemonById(pokemonId: number): Observable<Pokemon|undefined> {
     return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
-      tap ((pokemonList) => console.table(pokemonList)),
+      tap ((pokemonList) => this.log(pokemonList)),
       catchError(error => this.handleError(error, undefined)))
   }
 
@@ -31,10 +31,12 @@ export class PokemonService {
     )
   }
 
-  addPokemon(pokemon: Pokemon): Observable<null> {
+  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
     const httpOptions = {
       headers : new HttpHeaders({'content-type': 'application/json'})
     };
+     console.log(pokemon);
+
     return this.http.post<Pokemon>('api/pokemons', pokemon, httpOptions).pipe(
       tap(response => this.log(response)),
       catchError((error) => this.handleError(error,undefined))
