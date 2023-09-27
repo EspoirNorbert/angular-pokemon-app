@@ -87,12 +87,14 @@ firebase deploy
 
 # Screenshoot
 ![Login Page](/src/assets/screens/ngpokemon_login_page.png)
-![Pokemon List Page](/src/assets/screens/ngpokemon_list_page.png)
-![Detail Pokemon Page](/src/assets/screens/ngpokemon_detail_page.png)
-![Add Pokemon Page](/src/assets/screens/ngpokemon_add_page.png)
-![Search Pokemon](/src/assets/screens/ngpokemon_search_pokemon.png)
 
-3. Initialialiser le projet firebase avec les commandes suivantes:
+![Pokemon List Page](/src/assets/screens/ngpokemon_list_page.png)
+
+![Detail Pokemon Page](/src/assets/screens/ngpokemon_detail_page.png)
+
+![Add Pokemon Page](/src/assets/screens/ngpokemon_add_page.png)
+
+![Search Pokemon](/src/assets/screens/ngpokemon_search_pokemon.png)
 
 ## Licence
 
