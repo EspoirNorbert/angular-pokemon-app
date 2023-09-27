@@ -8,6 +8,7 @@ import { PokemonTypeColorPipe } from './pokemon-type-color.pipe.pipe';
 import { RouterModule, Routes } from '@angular/router';
 import { PokemonService } from './pokemon.service';
 import { PokemonFormComponent } from './pokemon-form/pokemon-form.component';
+import { AddPokemonComponent } from './add-pokemon/add-pokemon.component';
 
 const pokemonRoutes: Routes = [
   {path: 'pokemons' , component: ListPokemonComponent},
@@ -20,7 +21,8 @@ const pokemonRoutes: Routes = [
     DetailPokemonComponent,
     BorderCardDirective,
     PokemonTypeColorPipe,
-    PokemonFormComponent
+    PokemonFormComponent,
+    AddPokemonComponent
   ],
   imports: [
     CommonModule,
